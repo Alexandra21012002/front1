@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="/style.css">
+        <title>Repit</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+        <div class="container-fluid">
+           <div class="navbar-header">
+           <a href="#" class="navbar-left">
+               <img src="/logo.png"  class="pull-left" width=75px/>
+               </a>
+            </div>
+
+            <div>
+            <ul class="nav navbar-nav">
+                <li><a href="repitProfile">Мой профиль</a></li>
+                <li><a href="ApplicationsRepit">Заявки</a></li>
+                </ul>
+            </div>
+            </div>
+            </nav>
+        <h1>Мой профиль</h1>
+        <div class="page-content page-container" id="page-content">
+    <div class="padding">
+        <div class="row container d-flex justify-content-center">
+<div class="col-xl-6 col-md-12">
+    <div class="card user-card-full">
+      <div class="row m-l-0 m-r-0">
+         <div class="col-sm-4 bg-c-lite-green user-profile">
+            <div class="card-block text-center text-white">
+                 <h6 class="f-w-600"><span th:text="${fName}"></span></h6>
+                 <p>Репетитор</p>
+                <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                 </div>
+                 </div>
+                                                        <div class="col-sm-8">
+                                                            <div class="card-block">
+                                                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Личные данные</h6>
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <p class="m-b-10 f-w-600">Стаж</p>
+                                                                        <h6 class="text-muted f-w-400"><span th:text="${experience}"></span></h6>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <p class="m-b-10 f-w-600">Телефон</p>
+                                                                        <h6 class="text-muted f-w-400"><span th:text="${mobile}"></span></h6>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-6">
+                                                                        <p class="m-b-10 f-w-600">Город</p>
+                                                                        <h6 class="text-muted f-w-400"><span th:text="${city}"></span></h6>
+                                                                    </div>
+
+                                                                <div class="col-sm-6">
+                                                                        <p class="m-b-10 f-w-600">Место работы</p>
+                                                                        <h6 class="text-muted f-w-400"><span th:text="${workplace}"></span></h6>
+                                                                    </div>
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             </div>
+                                                </div>
+                                            </div>
+        <h1>Мои уроки</h1>
+        <div class="container_lesson" id="endLesson">
+            <tr th:each="item : ${CompletedLessonForTutor}" >
+                <div class="container" id = "con1">
+                    <div class="row align-items-center flex-row-reverse">
+                        <div class="col-lg-6">
+                            <div class="about-text go-to">
+                                <h3 class="dark-color"><span th:text="${item[0]}" id = "NameTutor"></span></h3>
+                                <h6 class="theme-color lead">Предмет: <span th:text="${item[2]}" id = "Sub"></span></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="counter">
+                        <div class="row">
+                            <div class="col-6 col-lg-3">
+                                <div class="count-data text-center">
+                                    <h6 class="count h2" data-to="500" data-speed="500"><span th:text="${item[1]}" id = "YearsOld"></span></h6>
+                                    <p class="m-0px font-w-600">Возраст ученика</p>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <div class="count-data text-center">
+                                    <h6 class="count h2" data-to="500" data-speed="500"><span th:text="${item[3]}" id = "DateTime"></span></h6>
+                                    <p class="m-0px font-w-600">Дата урока</p>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <div class="count-data text-center">
+                                    <h6 class="count h2" data-to="500" data-speed="500"><span th:text="${item[4]}" id = "MyMark"></span></h6>
+                                    <p class="m-0px font-w-600">Моя оценка</p>
+                                </div>
+                            </div>
+                            <div class="col-6 col-lg-3">
+                                <div class="count-data text-center">
+                                    <h6 class="count h2" data-to="500" data-speed="500"><span th:text="${item[5]}" id="MyComment"></span></h6>
+                                    <p class="m-0px font-w-600">Мой комментарий</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </body>
+</html>

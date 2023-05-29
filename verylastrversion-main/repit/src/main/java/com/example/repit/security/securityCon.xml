@@ -1,0 +1,11 @@
+<http use-expressions="true">
+    <intercept-url pattern="/resources**" access="permitAll" />
+</http>
+
+<beans:bean id="myAuthenticationSuccessHandler"
+            class="com.foreach.security.MySimpleUrlAuthenticationSuccessHandler" />
+
+<authentication-manager>
+    <authentication-provider
+      ref="AuthProviderImpl" />
+</authentication-manager>

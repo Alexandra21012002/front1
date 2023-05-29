@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link media="all" rel="stylesheet" th:href="@{/style.css}" type="text/css"/>
+    <title>Login</title>
+<body>
+<form action="/login" method="post" class="login-form">
+    <label for="username" class="form-label">Введите свой email:</label>
+    <input type="text" name="username" id="username" class="form-input" placeholder="Введите email" required>
+    <label for="password" class="form-label">Пароль:</label>
+    <input type="password" name="password" id="password" class="form-input" placeholder="Введите пароль" required>
+    <button type="submit" class="form-button">Войти</button>
+    <a href="/registration" class="form-link">Нет аккаунта? Зарегистрируйтесь!</a>
+</form>
+</body>
+</html>

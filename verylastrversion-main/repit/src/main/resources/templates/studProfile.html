@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/style.css">
+
+    <script
+            src="https://code.jquery.com/jquery-3.6.3.js"
+            integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+            crossorigin="anonymous">
+    </script>
+
+    <script th:inline="javascript">
+        var myResult = [[${ConfirmedLessonList}]];
+        console.log(myResult);
+
+        function createCont() {
+            const container = document.createElement('div');
+            container.classList.add('container');
+            container.id = 'con1';
+
+            const innerDiv1 = document.createElement('div');
+            innerDiv1.classList.add('row', 'align-items-center', 'flex-row-reverse');
+
+            const innerDiv2 = document.createElement('div');
+            innerDiv2.classList.add('col-lg-6');
+
+            const aboutText = document.createElement('div');
+            aboutText.classList.add('about-text', 'go-to');
+
+            const nameTutor = document.createElement('h3');
+            nameTutor.classList.add('dark-color');
+            //nameTutor.innerHTML = '<span id="NameTutor"></span>';
+            nameTutor.innerText = '';
+            const subject = document.createElement('h6');
+            subject.classList.add('theme-color', 'lead');
+            //subject.innerHTML = 'Предмет: <span id="Sub"></span>';
+            subject.innerText = '';
+            const counterDiv = document.createElement('div');
+            counterDiv.classList.add('counter');
+
+            const innerDiv3 = document.createElement('div');
+            innerDiv3.classList.add('row');
+
+            const countData1 = document.createElement('div');
+            countData1.classList.add('col-6', 'col-lg-3');
+
+            const count1 = document.createElement('h6');
+            count1.classList.add('count', 'h2');
+            count1.setAttribute('data-to', '500');
+            count1.setAttribute('data-speed', '500');
+            count1.innerText = '';
+            //count1.innerHTML = '<span id="DateTime"></span>';
+
+            const p1 = document.createElement('p');
+            p1.classList.add('m-0px', 'font-w-600');
+            p1.innerText = 'Дата урока';
+
+            const countData2 = document.createElement('div');
+            countData2.classList.add('col-6', 'col-lg-3');
+
+            const count2 = document.createElement('h6');
+            count2.classList.add('count', 'h2');
+            count2.setAttribute('data-to', '500');
+            count2.setAttribute('data-speed', '500');
+            // count2.innerHTML = '<span id="MyMark"></span>';
+            count2.innerText = '';
+            const p2 = document.createElement('p');
+            p2.classList.add('m-0px', 'font-w-600');
+            p2.innerText = 'Моя оценка';
+
+            const countData3 = document.createElement('div');
+            countData3.classList.add('col-6', 'col-lg-3');
+
+            const count3 = document.createElement('h6');
+            count3.classList.add('count', 'h2');
+            count3.setAttribute('data-to', '500');
+            count3.setAttribute('data-speed', '500');
+            // count3.innerHTML = '<span id="MyComment"></span>';
+            count3.innerText = '';
+            const p3 = document.createElement('p');
+            p3.classList.add('m-0px', 'font-w-600');
+            p3.innerText = 'Мой комментарий';
+
+            countData1.appendChild(count1);
+            countData1.appendChild(p1);
+
+            countData2.appendChild(count2);
+            countData2.appendChild(p2);
+
+            countData3.appendChild(count3);
+            countData3.appendChild(p3);
+
+            innerDiv3.appendChild(countData1);
+            innerDiv3.appendChild(countData2);
+            innerDiv3.appendChild(countData3);
+
+            counterDiv.appendChild(innerDiv3);
+
+            aboutText.appendChild(nameTutor);
+            aboutText.appendChild(subject);
+
+            innerDiv2.appendChild(aboutText);
+
+            innerDiv1.appendChild(innerDiv2);
+
+            container.appendChild(innerDiv1);
+            container.appendChild(counterDiv);
+            return container;
+        }
+
+
+        $(function (){
+            $('#asd').submit(function (e){
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "studProfile",
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        // $('#con').html(data);
+                        console.log(data)
+
+                        //let con = document.getElementById('con1');
+                        const pls = document.getElementById('endLesson');
+                        pls.innerHTML = "";
+                        const con = createCont();
+                        console.log(con);
+                        $.each(data, function (index) {
+
+                            //const con = document.getElementById('con1');
+                            const clonedContainer = con.cloneNode(true);
+                            console.log(con);
+                            console.log(clonedContainer);
+
+                            const fio = clonedContainer.childNodes[0].childNodes[0].childNodes[0].childNodes[0];
+                            const sub = clonedContainer.childNodes[0].childNodes[0].childNodes[0].childNodes[1];
+                            const dataTime = clonedContainer.childNodes[1].childNodes[0].childNodes[0].childNodes[0];
+                            const mark = clonedContainer.childNodes[1].childNodes[0].childNodes[1].childNodes[0];
+                            const com = clonedContainer.childNodes[1].childNodes[0].childNodes[2].childNodes[0];
+
+
+                            fio.textContent = data[index][0];
+                            sub.textContent = data[index][1];
+                            dataTime.textContent = data[index][2];
+                            mark.textContent = data[index][3];
+                            com.textContent = data[index][4];
+
+                            pls.appendChild(clonedContainer);
+                            // document.body.append(endLesson.append(clonedContainer));
+                            //         temp.textContent = data[index][2];
+                            //         console.log(temp);
+                        });
+
+                        //     if(index === 0){
+                        //         const dayInput = document.getElementById('day');
+                        //         // console.log(dayInput)
+                        //         dayInput.appendChild(document.createTextNode(data[index][2]));
+                        //     }
+                        //     else{
+                        //         const con = document.getElementById('con');
+                        //         const clonedContainer = con.cloneNode(true);
+                        //
+                        //         const con_lesson = document.getElementById('con_lesson');
+                        //         const temp = clonedContainer.childNodes[3].childNodes[1].childNodes[1].childNodes[1].childNodes[1].childNodes[1];
+                        //         temp.textContent = data[index][2];
+                        //         console.log(temp);
+                        //
+                        //         document.body.append(con_lesson.append(clonedContainer));
+                        //         //const clonedDay = clonedContainer.querySelector('day');
+                        //
+                        //         // clonedDay.html(data[index][2]);
+                        //         // clonedDay.append(document.createTextNode(data[index][2]));
+                        //
+                        //         // const con_lesson = document.getElementById('con_lesson');
+                        //         // document.body.append(con_lesson.append(clonedContainer));
+                        //         // var dayInput = document.getElementById('day');
+                        //         // var dayInputind = document.getElementById('day');
+                        //         // dayInputind.appendChild(document.createTextNode(data[index][2]));
+                        //     }
+                        // });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <title>Repit</title>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="#" class="navbar-left">
+                <img src="/logo.png"  class="pull-left" width=75px/>
+            </a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="/studProfile">Мой профиль</a></li>
+                <li><a href="/StudentAds">Объявления</a></li>
+                <li><a href="/logout" method="post">Выйти</Вы></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<form action="/studProfile" method="post" id = "asd">
+
+<h1>Мой профиль</h1>
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            <div class="row container d-flex justify-content-center">
+                <div class="col-xl-6 col-md-12">
+                    <div class="card user-card-full">
+                        <div class="row m-l-0 m-r-0">
+                            <div class="col-sm-4 bg-c-lite-blue user-profile">
+                                <div class="card-block text-center text-white">
+                                    <h6 class="f-w-600" >  <span th:text="${fName}"></span> </h6>
+                                    <p>Ученик</p>
+                                    <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="card-block">
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Личные данные</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Возраст</p>
+                                            <h6 class="text-muted f-w-400"><span th:text="${yearsOld}"></span></h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Телефон</p>
+                                            <h6 class="text-muted f-w-400"><span th:text="${mobile}"></span></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Город</p>
+                                            <h6 class="text-muted f-w-400"><span th:text="${city}"></span></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<h1>Подтвержденный урок</h1>
+<div class="container_lesson">
+    <div class="containerAccept">
+    <tr th:each="item : ${ConfirmedLessonList}" >
+    <table>
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-6">
+                    <div class="about-text go-to">
+                        <h3 class="dark-color"><span th:text="${item[0]}"></span></h3>
+                        <h6 class="theme-color lead">Предмет:<span th:text="${item[1]}"></span></h6>
+                    </div>
+                </div>
+            </div>
+            <div class="counter">
+                <div class="row">
+                    <div class="col-6 col-lg-3">
+                        <div class="count-data text-center">
+                            <h6 class="count h2" data-to="500" data-speed="500"><span th:text="${item[2]}"></span></h6>
+                            <p class="m-0px font-w-600">Дата урока</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </table>
+    </tr>
+    </div>
+</div>
+
+<h1>Ожидание отзыва</h1>
+<div class="container_lesson" id="con_lesson">
+    <table>
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-6">
+                    <div class="about-text go-to">
+                        <h3 class="dark-color">ФАМИЛИЯ</h3>
+                        <h6 class="theme-color lead">Предмет: Математика</h6>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <input type="submit" class="btn btn-success"value="Отправить" />
+                </div>
+            </div>
+            <div class="counter">
+                <div class="row">
+                    <div class="col-6 col-lg-3">
+                        <div class="count-data text-center">
+                            <h6 class="count h2" data-to="500" data-speed="500" > 2023-03-29 </h6>
+                            <p class="m-0px font-w-600">Дата урока</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="count-data text-center">
+                            <input name="mark" type="number" min="0" max="10" />
+                            <p class="m-0px font-w-600">Моя оценка</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="count-data text-center">
+                            <input name="comment" type="text"/>
+                            <p class="m-0px font-w-600">Мой комментарий</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </table>
+</div>
+
+<h1>Завершенный урок</h1>
+<div class="container_lesson" id="endLesson">
+    <tr th:each="item : ${CompletedLessonList}" >
+        <div class="container" id = "con1">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-6">
+                    <div class="about-text go-to">
+                        <h3 class="dark-color"><span th:text="${item[0]}" id = "NameTutor"></span></h3>
+                        <h6 class="theme-color lead">Предмет: <span th:text="${item[1]}" id = "Sub"></span></h6>
+                    </div>
+                </div>
+            </div>
+            <div class="counter">
+                <div class="row">
+                    <div class="col-6 col-lg-3">
+                        <div class="count-data text-center">
+                            <h6 class="count h2" data-to="500" data-speed="500"><span th:text="${item[2]}" id = "DateTime"></span></h6>
+                            <p class="m-0px font-w-600">Дата урока</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="count-data text-center">
+                            <h6 class="count h2" data-to="500" data-speed="500"><span th:text="${item[3]}" id = "MyMark"></span></h6>
+                            <p class="m-0px font-w-600">Моя оценка</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3">
+                        <div class="count-data text-center">
+                            <h6 class="count h2" data-to="500" data-speed="500"><span th:text="${item[4]}" id="MyComment"></span></h6>
+                            <p class="m-0px font-w-600">Мой комментарий</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</form>
+</body>
+</html>
